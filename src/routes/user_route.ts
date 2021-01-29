@@ -1,11 +1,10 @@
 import { Router } from 'express'
 import { check } from 'express-validator'
-import userController from '../controllers/user'
+import userController from '../controllers/Cn_user'
 import auth from '../middleware/auth'
+import upload from '../middleware/upload'
 const userRouter = Router()
-userRouter.post("/user", [check('name', 'name requried').not().isEmpty(),
-check('email', 'include valid email').isEmail(),
-check('password', 'password ,min length 8 characters').isLength({ min: 8 })],
+userRouter.post("/user", upload.single('avatar'),
     userController.Register)
 
 userRouter.post('/login', [check('email', 'include valid email').isEmail(),
@@ -14,4 +13,6 @@ check('password', 'password is required').exists()], userController.Login)
 userRouter.post('/userauth', auth, (req, res) => {
     res.send(req.user)
 })
+
+userRouter.get('/userAvatar/:id', userController.ImageUrl)
 export default userRouter
