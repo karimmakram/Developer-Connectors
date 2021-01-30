@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node compile/index.js",
-    "dev": "nodemon index.ts",
+    "server": "nodemon index.ts",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client \"",
     "bulid": "tsc -p ."
   },
   "keywords": [],
