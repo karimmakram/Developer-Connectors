@@ -7,6 +7,9 @@ const userRouter = Router()
 
 // add user
 userRouter.post("/user", upload.single('avatar'),
+    [check('email', 'include valid email').isEmail(),
+    check('password', 'password is required and min length is 8 char').exists().isLength({ min: 8 }),
+    check('name', 'name is required').exists().isLength({ min: 2 })],
     userController.Register)
 
 //login

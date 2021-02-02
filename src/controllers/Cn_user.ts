@@ -15,13 +15,19 @@ class userController {
     }
 
     Register = async (req: Request, res: Response) => {
+
+        const error = validationResult(req)
+        if (!error.isEmpty()) {
+            console.log(error.array());
+            return res.status(400).send(error.array())
+        }
         try {
             const { name, email, password }: { name: string, email: string, password: string } = req.body
             if (await userModel.findOne({ email })) {
-                return res.status(400).send('you should choose other email Address')
+                return res.status(400).send([{ msg: 'you should choose other email Address' }])
             }
             if (!req.file) {
-                return res.status(400).send('you must upload Avatar')
+                return res.status(400).send([{ msg: 'you must upload Avatar' }])
             }
             const bufferImg = await sharp(req.file.buffer).png().resize(250, 250).toBuffer()
             const avatar = Buffer.from(bufferImg.toString('base64'))
@@ -29,7 +35,7 @@ class userController {
             await user.save()
             res.status(200).send({ user, token: this.getToken(user.id) })
         } catch (e) {
-            res.status(400).send(e.message)
+            res.status(400).send([{ msg: e.message }])
         }
     }
 
