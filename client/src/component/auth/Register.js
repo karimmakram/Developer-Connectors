@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { setAlert } from '../../action/alert'
 import { register } from '../../action/auth'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+
+
 class Register extends Component {
     state = ({
         name: '',
@@ -39,7 +42,12 @@ class Register extends Component {
             body
         })
     }
+
+
     render() {
+        if (this.props.isAuthenticated) {
+            return <Redirect to='/dashboard' />
+        }
         return (
             <div>
                 <h1 className="large text-primary">Sign Up</h1>
@@ -107,4 +115,7 @@ class Register extends Component {
     }
 }
 
-export default connect(null, { setAlert, register })(Register)
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+export default connect(mapStateToProps, { setAlert, register })(Register)

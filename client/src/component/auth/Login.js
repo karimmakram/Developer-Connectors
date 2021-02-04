@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import { Redirect } from 'react-router-dom'
 
-const Login = () => {
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { login } from '../../action/auth'
+const Login = (props) => {
     const [loginDate, setLoginDate] = useState({
         email: '',
         password: ''
@@ -15,23 +18,13 @@ const Login = () => {
 
     const submitLogin = async (e) => {
         e.preventDefault()
-        try {
+        const date = { email, password }
+        const body = JSON.stringify(date)
+        props.login({ body })
 
-            const config = {
-                headers: {
-                    'Content-Type': 'Application/json',
-                }
-            }
-            const date = { email, password }
-            const body = JSON.stringify(date)
-            const res = await axios.post('http://localhost:3006/login', body, config)
-            console.log(res);
-
-        } catch (error) {
-            console.log(error.message);
-
-        }
-
+    }
+    if (props.isAuthenticated) {
+        return <Redirect to='/dashboard' />
     }
     return (
         <section className="container">
@@ -66,5 +59,12 @@ const Login = () => {
         </section>
     )
 }
+Login.prototype = {
+    login: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool,
+}
 
-export default Login
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+export default connect(mapStateToProps, { login })(Login)

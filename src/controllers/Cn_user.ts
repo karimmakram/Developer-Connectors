@@ -48,11 +48,11 @@ class userController {
             const { email, password }: { email: string, password: string } = req.body
             const user = await userModel.findOne({ email })
             if (!user) {
-                return res.status(400).send('invaild login')
+                return res.status(400).send([{ msg: 'invaild login' }])
             }
             if (user.password) {
                 if (!await bcryptjs.compare(password, user.password)) {
-                    return res.status(401).send('invalid login')
+                    return res.status(401).send([{ msg: 'invalid login' }])
                 }
                 const token = this.getToken(user.id)
                 res.send({ user, token })
@@ -66,11 +66,11 @@ class userController {
         try {
             const _id = req.params.id
             if (!_id) {
-                return res.status(400).send('Not found')
+                return res.status(400).send([{ msg: 'Not found' }])
             }
             const user = await userModel.findById({ _id })
             if (!user) {
-                return res.status(400).send('user dosent exist')
+                return res.status(400).send([{ msg: 'user dosent exist' }])
             }
             res.set('Content-Type', 'image/png')
             if (user.avatar) {

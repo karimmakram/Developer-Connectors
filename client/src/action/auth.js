@@ -1,6 +1,21 @@
-import { REGISTER_FAIL, REGISTER_SUCCESS } from "./types";
+import { REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT } from "./types";
 import axios from 'axios'
 import { setAlert } from "./alert";
+import setAuthToken from "../helper/setAuthToken";
+
+export const loadUser = () => async dispatch => {
+    if (localStorage.token) {
+        setAuthToken(localStorage.token)
+    }
+    try {
+        const res = await axios.get('http://localhost:5000/userauth')
+        dispatch({ type: USER_LOADED, data: res.data })
+        // dispatch(loadUser())
+    } catch (error) {
+
+        dispatch({ type: AUTH_ERROR })
+    }
+}
 
 export const register = ({ body }) => async dispatch => {
     console.log(body.avatar);
@@ -13,7 +28,7 @@ export const register = ({ body }) => async dispatch => {
 
     try {
 
-        const res = await axios.post('http://localhost:3006/user', body, config)
+        const res = await axios.post('http://localhost:5000/user', body, config)
         console.log(res.data);
         dispatch({
             type: REGISTER_SUCCESS,
@@ -28,4 +43,28 @@ export const register = ({ body }) => async dispatch => {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
         dispatch({ type: REGISTER_FAIL })
     }
+}
+
+export const login = ({ body }) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'Application/json',
+        }
+    }
+    try {
+        const res = await axios.post('http://localhost:5000/login', body, config)
+        console.log(res.data);
+
+        dispatch({ type: LOGIN_SUCCESS, data: res.data })
+    } catch (E) {
+
+        const errors = E.response.data
+        if (errors)
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+        dispatch({ type: LOGIN_FAIL })
+    }
+}
+
+export const Logout = () => dispatch => {
+    dispatch({ type: LOGOUT })
 }

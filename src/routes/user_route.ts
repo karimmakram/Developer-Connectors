@@ -16,7 +16,7 @@ userRouter.post("/user", upload.single('avatar'),
 userRouter.post('/login', [check('email', 'include valid email').isEmail(),
 check('password', 'password is required').exists()], userController.Login)
 
-userRouter.post('/userauth', auth, (req, res) => {
+userRouter.get('/userauth', auth, (req, res) => {
     res.send(req.user)
 })
 
