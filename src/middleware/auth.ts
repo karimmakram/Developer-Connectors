@@ -7,7 +7,6 @@ declare global {
         export interface Request {
             user: User
             token: string
-
         }
     }
 }
@@ -23,6 +22,8 @@ const Auth = async (req: Request, res: Response, next: NextFunction) => {
     try {
 
         req.user = user
+        console.log(req.user._id);
+
         req.token = token
         next()
     } catch (error) {

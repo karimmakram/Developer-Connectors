@@ -2,6 +2,7 @@ import { Typegoose, prop, pre, instanceMethod } from 'typegoose'
 import { Binary } from 'mongodb'
 import config from 'config'
 import bcrypt from 'bcryptjs'
+import Mongoose from 'mongoose'
 @pre<User>('save', async function (next) {
     const user = this
     if (user.isModified('password') && user.password) {
@@ -11,6 +12,7 @@ import bcrypt from 'bcryptjs'
     next()
 })
 export class User extends Typegoose {
+    _id?: Mongoose.Schema.Types.ObjectId
     @prop({ required: true })
     name?: string
 

@@ -58,6 +58,7 @@ class userController {
                 res.send({ user, token })
             }
         } catch (error) {
+            res.status(400).send([{ msg: error.message }])
 
         }
     }
