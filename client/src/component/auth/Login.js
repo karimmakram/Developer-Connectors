@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { login } from '../../action/auth'
+import { login } from '../../redux/auth/action'
 const Login = (props) => {
     const [loginDate, setLoginDate] = useState({
         email: '',

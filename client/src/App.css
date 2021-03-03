@@ -269,7 +269,9 @@ button {
 .form .social-input {
   display: flex;
 }
-
+i{
+  margin-right: 0.2rem;
+}
 .form .social-input i {
   padding: 0.5rem;
   width: 4rem;

@@ -8,8 +8,11 @@ import Register from './component/auth/Register'
 import { Provider } from 'react-redux'
 import store from './store'
 import './App.css';
-import { loadUser } from './action/auth'
+import { loadUser } from './redux/auth/action'
 import setAuthToken from './helper/setAuthToken'
+import Dashboard from './component/dashboard/Dashboard'
+import Profile from './component/profileForms/Profile'
+import PrivateRoute from './component/routing/PrivateRoute'
 
 
 if (localStorage.token) {
@@ -28,8 +31,10 @@ function App() {
           <section className="container">
             <Alert />
             <Switch>
-              <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/register" component={Register} />
+              <PrivateRoute exact path='/create-profile' component={Profile} />
+              <PrivateRoute exact path='/dashboard' component={Dashboard} />
             </Switch>
           </section>
         </Fragment>

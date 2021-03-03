@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { setAlert } from '../../action/alert'
-import { register } from '../../action/auth'
+import { setAlert } from '../../redux/alert/action'
+import { register } from '../../redux/auth/action'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 

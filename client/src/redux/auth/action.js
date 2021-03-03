@@ -1,7 +1,8 @@
-import { REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, APP_URL } from "./types";
+import { REGISTER_FAIL, REGISTER_SUCCESS, USER_LOADED, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT, APP_URL, CLEAR_PROFILE } from "../types";
 import axios from 'axios'
-import { setAlert } from "./alert";
-import setAuthToken from "../helper/setAuthToken";
+import { setAlert } from "../alert/action";
+import setAuthToken from "../../helper/setAuthToken";
+import { getConfig } from "../../helper/configHeader";
 
 export const loadUser = () => async dispatch => {
     if (localStorage.token) {
@@ -18,14 +19,7 @@ export const loadUser = () => async dispatch => {
 }
 
 export const register = ({ body }) => async dispatch => {
-    console.log(body.avatar);
-
-    const config = {
-        headers: {
-            'Content-Type': 'Application/json',
-        }
-    }
-
+    const config = getConfig()
     try {
 
         const res = await axios.post(`${APP_URL}/user`, body, config)
@@ -46,15 +40,10 @@ export const register = ({ body }) => async dispatch => {
 }
 
 export const login = ({ body }) => async dispatch => {
-    const config = {
-        headers: {
-            'Content-Type': 'Application/json',
-        }
-    }
+    const config = getConfig()
     try {
         const res = await axios.post(`${APP_URL}/login`, body, config)
         console.log(res.data);
-
         dispatch({ type: LOGIN_SUCCESS, data: res.data })
     } catch (E) {
 
@@ -66,5 +55,6 @@ export const login = ({ body }) => async dispatch => {
 }
 
 export const Logout = () => dispatch => {
+    dispatch({ type: CLEAR_PROFILE })
     dispatch({ type: LOGOUT })
 }

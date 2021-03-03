@@ -1,11 +1,14 @@
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Logout } from '../../action/auth'
+import { Link } from 'react-router-dom'
+import { Logout } from '../../redux/auth/action'
 const Header = ({ Logout, isAuthenticated, loading }) => {
     const authLinks = (<ul>
         <li><a href="profiles.html">Developers</a></li>
         <li><a href="/register">Posts</a></li>
+        <li><Link to="/dashboard">
+            <i className="fas fa-user"></i><span className="hide-sm">Dashboard</span></Link></li>
         <li><a href="#!" onClick={Logout}>
             <i className="fas fa-sign-out-alt"></i><span className="hide-sm">Logout</span></a></li>
     </ul>

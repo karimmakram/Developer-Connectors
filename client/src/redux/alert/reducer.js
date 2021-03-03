@@ -1,4 +1,4 @@
-import { SET_ALERT, REMOVE_ALERT } from '../action/types'
+import { SET_ALERT, REMOVE_ALERT } from '../types'
 const initalState = []
 
 export default function alert(state = initalState, action) {

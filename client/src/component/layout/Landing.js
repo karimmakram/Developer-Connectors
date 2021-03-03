@@ -1,6 +1,11 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 
-const Landing = () => {
+const Landing = ({ isAuth }) => {
+    if (isAuth) {
+        return <Redirect to='/dashboard' />
+    }
     return (
         <section className="landing">
             <div className="dark-overlay">
@@ -14,10 +19,11 @@ const Landing = () => {
                         <a href="/register" className="btn btn-primary">Sign Up</a>
                         <a href="/login" className="btn btn-light">Login</a>
                     </div>
+
                 </div>
             </div>
         </section>
     )
 }
-
-export default Landing
+const mapStateToProps = state => ({ isAuth: state.auth.isAuthenticated })
+export default connect(mapStateToProps)(Landing)
