@@ -1,6 +1,6 @@
 import { setAlert } from '../alert/action'
 import axios from 'axios'
-import { GET_PROFILE, PROFILE_NOT_FOUND, APP_URL, ADD_PROFILE, UPDATE_PROFILE } from '../types'
+import { GET_PROFILE, PROFILE_NOT_FOUND, APP_URL, ADD_PROFILE, UPDATE_PROFILE, DELETE_EXPERIENCE, DELETE_ACCOUNT, CLEAR_PROFILE } from '../types'
 import setAuthToken from '../../helper/setAuthToken'
 import { getConfig } from '../../helper/configHeader'
 
@@ -46,5 +46,73 @@ export const add_exrerience = (FormData, history) => async dispatch => {
         const errors = e.response.data
         if (errors)
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+    }
+}
+
+export const add_education = (FormData, history) => async dispatch => {
+    const config = getConfig()
+    setAuthToken(localStorage.token)
+    try {
+        const res = await axios.put(`${APP_URL}/profile/education`, FormData, config)
+        dispatch(setAlert('Education ADDed', 'success'))
+        dispatch({ type: UPDATE_PROFILE, data: res.data })
+        history.push('/dashboard')
+    } catch (e) {
+        dispatch({ type: PROFILE_NOT_FOUND, data: e })
+        const errors = e.response.data
+        if (errors)
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+    }
+}
+
+export const delete_experience = (id) => async dispatch => {
+    const config = getConfig()
+    setAuthToken(localStorage.token)
+    try {
+        const res = await axios.delete(`${APP_URL}/profile/experience/${id}`, null, config)
+        dispatch(setAlert('Experience Deleted', 'success'))
+        dispatch({ type: DELETE_EXPERIENCE, data: res.data })
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: PROFILE_NOT_FOUND, data: e })
+        const errors = e.response.data
+        if (errors)
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+
+    }
+}
+
+export const delete_education = (id) => async dispatch => {
+    const config = getConfig()
+    setAuthToken(localStorage.token)
+    try {
+        const res = await axios.delete(`${APP_URL}/profile/education/${id}`, null, config)
+        dispatch(setAlert('education Deleted', 'success'))
+        dispatch({ type: DELETE_EXPERIENCE, data: res.data })
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: PROFILE_NOT_FOUND, data: e })
+        const errors = e.response.data
+        if (errors)
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+
+    }
+}
+export const delete_Account = () => async dispatch => {
+    if (window.confirm('are you sure ?')) {
+        const config = getConfig()
+        setAuthToken(localStorage.token)
+        try {
+            await axios.delete(`${APP_URL}/profile`, null, config)
+            dispatch(setAlert('Account Deleted'))
+            dispatch({ type: CLEAR_PROFILE })
+            dispatch({ type: DELETE_ACCOUNT })
+        } catch (e) {
+            dispatch({ type: PROFILE_NOT_FOUND, data: e })
+            const errors = e.response.data
+            if (errors)
+                errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+
+        }
     }
 }

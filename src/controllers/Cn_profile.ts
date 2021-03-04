@@ -8,6 +8,7 @@ import mongoose from 'mongoose'
 import config from 'config'
 import { userModel } from '../Models/users'
 import request from 'request'
+import { postModel } from '../Models/posts'
 class profileController {
     addProfile = async (req: Request, res: Response) => {
         try {
@@ -97,6 +98,7 @@ class profileController {
 
     deleteprofile = async (req: Request, res: Response) => {
         try {
+            await postModel.deleteMany({ user: req.user._id })
             const profile = await profileModel.findOneAndRemove({ user: req.user._id })
             if (!profile)
                 return res.status(400).send([{ msg: 'your profile information didnt create til now' }])

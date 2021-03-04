@@ -1,20 +1,16 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState } from 'react'
 import { connect } from 'react-redux'
-import { add_profile, get_profile } from '../../redux/profile/action'
+import { add_profile } from '../../redux/profile/action'
 import { withRouter, Link } from 'react-router-dom'
 
-function Profile({ add_profile, get_profile, history, profile }) {
-    useEffect(() => {
-        get_profile();
-        setProfile(true)
-    }, [])
+function Profile({ add_profile, history, profile }) {
     const options = [{ value: 0, option: '* Select Professional Status' }, { value: 'Developer', option: 'Developer' },
     { value: 'Junior Developer', option: 'Junior Developer' }, { value: 'Senior Developer', option: 'Senior Developer' },
     { value: 'Manager', option: 'Manager' }, { value: 'Student or Learning', option: 'Student or Learning' },
     { value: 'Instructor', option: 'Instructor or Teacher' }, { value: 'Other', option: 'Other' }, { value: 'Intern', option: 'Intern' }
     ]
     const [socialFlag, setSocial] = useState(false)
-    const [profileFlag, setProfile] = useState(false)
+    const [profileFlag, setProfile] = useState(true)
     const [formData, setFormData] = useState({
         status: '',
         company: '',
@@ -167,4 +163,4 @@ function Profile({ add_profile, get_profile, history, profile }) {
     )
 }
 const mapStateToProps = state => ({ profile: state.profile.profile })
-export default connect(mapStateToProps, { add_profile, get_profile })(withRouter(Profile))
+export default connect(mapStateToProps, { add_profile })(withRouter(Profile))

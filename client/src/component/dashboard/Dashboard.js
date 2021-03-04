@@ -1,10 +1,12 @@
 import React, { useEffect, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { get_profile } from '../../redux/profile/action'
+import { get_profile, delete_Account } from '../../redux/profile/action'
 import { Link } from 'react-router-dom'
 import Spinner from '../layout/Spinner'
 import DashboardAction from './DashboardAction'
-function Dashboard({ get_profile, profile: { profile, loading }, auth: { user } }) {
+import Experience from './Experience'
+import Education from './Education'
+function Dashboard({ get_profile, delete_Account, profile: { profile, loading }, auth: { user } }) {
     useEffect(() => {
         get_profile();
     }, [])
@@ -16,6 +18,15 @@ function Dashboard({ get_profile, profile: { profile, loading }, auth: { user } 
                 <Fragment>
                     {profile !== null ? <Fragment>
                         <DashboardAction />
+                        <Experience experiences={profile.experience} />
+                        <Education educations={profile.education} />
+
+                        <div class="my-2">
+                            <button class="btn btn-danger" onClick={delete_Account}>
+                                <i class="fas fa-user-minus"></i>
+                                Delete My Account
+                            </button>
+                        </div>
                     </Fragment> :
                         <Fragment>
                             <p>you have not yet setup a profile,please add some info</p>
@@ -30,4 +41,4 @@ function Dashboard({ get_profile, profile: { profile, loading }, auth: { user } 
     )
 }
 const mapStateToProps = state => ({ profile: state.profile, auth: state.auth })
-export default connect(mapStateToProps, { get_profile })(Dashboard)
+export default connect(mapStateToProps, { get_profile, delete_Account })(Dashboard)

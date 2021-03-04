@@ -1,4 +1,4 @@
-import { GET_PROFILE, PROFILE_NOT_FOUND, CLEAR_PROFILE, ADD_PROFILE } from '../types'
+import { GET_PROFILE, PROFILE_NOT_FOUND, CLEAR_PROFILE, ADD_PROFILE, UPDATE_PROFILE, DELETE_EXPERIENCE } from '../types'
 const initState = {
     loading: true,
     profile: null,
@@ -11,6 +11,8 @@ export default function profile(state = initState, action) {
     switch (type) {
         case (GET_PROFILE):
         case (ADD_PROFILE):
+        case (UPDATE_PROFILE):
+        case (DELETE_EXPERIENCE):
             return ({ ...state, profile: data, error: '', loading: false })
         case (PROFILE_NOT_FOUND):
             return ({ ...state, profile: null, error: data, loading: false })
