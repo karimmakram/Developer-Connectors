@@ -5,16 +5,16 @@ import { Link } from 'react-router-dom'
 import { Logout } from '../../redux/auth/action'
 const Header = ({ Logout, isAuthenticated, loading }) => {
     const authLinks = (<ul>
-        <li><a href="profiles.html">Developers</a></li>
+        <li><Link to="/profiles">Developers</Link></li>
         <li><a href="/register">Posts</a></li>
         <li><Link to="/dashboard">
             <i className="fas fa-user"></i><span className="hide-sm">Dashboard</span></Link></li>
-        <li><a href="#!" onClick={Logout}>
-            <i className="fas fa-sign-out-alt"></i><span className="hide-sm">Logout</span></a></li>
+        <li><Link to="/login" onClick={Logout}>
+            <i className="fas fa-sign-out-alt"></i><span className="hide-sm">Logout</span></Link></li>
     </ul>
     )
     const guestLinks = (<ul>
-        <li><a href="profiles.html">Developers</a></li>
+        <li><a href="/profiles">Developers</a></li>
         <li><a href="/register">Register</a></li>
         <li><a href="/login">Login</a></li>
     </ul>

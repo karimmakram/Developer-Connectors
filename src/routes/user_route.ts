@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { Router,Request ,Response} from 'express'
 import { check } from 'express-validator'
 import userController from '../controllers/Cn_user'
 import auth from '../middleware/auth'
@@ -6,7 +6,12 @@ import upload from '../middleware/upload'
 const userRouter = Router()
 
 // add user
-userRouter.post("/user", upload.single('avatar'),
+userRouter.post("/user",function(req:Request,res:Response){
+  upload(req,res,function(err:any){
+      if(err)
+        return res.status(400).send([{msg:err.message+' max size 1MB'}])
+  })
+} ,
     [check('email', 'include valid email').isEmail(),
     check('password', 'password is required and min length is 8 char').exists().isLength({ min: 8 }),
     check('name', 'name is required').exists().isLength({ min: 2 })],

@@ -30,8 +30,6 @@ export const register = ({ body }) => async dispatch => {
         })
         dispatch(setAlert('user added', 'success'))
     } catch (e) {
-        console.log(e.response.data);
-
         const errors = e.response.data
         if (errors)
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))

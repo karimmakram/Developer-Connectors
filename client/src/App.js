@@ -11,10 +11,12 @@ import './App.css';
 import { loadUser } from './redux/auth/action'
 import setAuthToken from './helper/setAuthToken'
 import Dashboard from './component/dashboard/Dashboard'
-import Profile from './component/profileForms/Profile'
+import AddProfile from './component/profileForms/AddProfile'
 import PrivateRoute from './component/routing/PrivateRoute'
 import AddExperience from './component/profileForms/AddExperience'
 import AddEducation from './component/profileForms/AddEducation'
+import Profiles from './component/profiles/Profiles'
+import Profile from './component/profiles/profile/Profile'
 
 
 if (localStorage.token) {
@@ -35,10 +37,12 @@ function App() {
             <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
-              <PrivateRoute exact path='/create-profile' component={Profile} />
+              <Route exact path="/profile/:id" component={Profile} />
+              <PrivateRoute exact path='/create-profile' component={AddProfile} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <PrivateRoute exact path='/add-experience' component={AddExperience} />
               <PrivateRoute exact path='/add-education' component={AddEducation} />
+              <Route exact path="/profiles" component={Profiles} />
             </Switch>
           </section>
         </Fragment>

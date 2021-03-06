@@ -13,7 +13,7 @@ declare global {
 const Auth = async (req: Request, res: Response, next: NextFunction) => {
     const token = req.header('Authorization')
     if (!token)
-        return res.status(401).send('authorization denied')
+        return res.status(401).send([{ msg: 'authorization denied' }])
     const _id = jwt.verify(token, config.get('jwtSecret'))
     console.log(_id);
     const user = await userModel.findOne({ _id }).select('-password')

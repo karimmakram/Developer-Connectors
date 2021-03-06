@@ -1,6 +1,6 @@
 import { setAlert } from '../alert/action'
 import axios from 'axios'
-import { GET_PROFILE, PROFILE_NOT_FOUND, APP_URL, ADD_PROFILE, UPDATE_PROFILE, DELETE_EXPERIENCE, DELETE_ACCOUNT, CLEAR_PROFILE } from '../types'
+import { GET_PROFILE, PROFILE_NOT_FOUND, APP_URL, ADD_PROFILE, UPDATE_PROFILE, DELETE_EXPERIENCE, DELETE_ACCOUNT, CLEAR_PROFILE, GET_PROFILES, GET_GITHUB_REPOS ,GITHUB_REPOS_ERROR} from '../types'
 import setAuthToken from '../../helper/setAuthToken'
 import { getConfig } from '../../helper/configHeader'
 
@@ -16,7 +16,41 @@ export const get_profile = () => async dispatch => {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
     })
 }
+export const get_profile_byId = (userId) => async dispatch => {
+    setAuthToken(localStorage.token)
+    axios.get(`${APP_URL}/profile/${userId}`).then(res => {
+        dispatch({ type: GET_PROFILE, data: res.data })
+    }).catch(e => {
+        dispatch({ type: PROFILE_NOT_FOUND, data: e })
+        const errors = e.response.data
+        if (errors)
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+    })
+}
 
+export const get_github_repos = (githubUsername) => async dispatch => {
+    setAuthToken(localStorage.token)
+    axios.get(`${APP_URL}/profile/github/${githubUsername}`).then(res => {
+        dispatch({ type: GET_GITHUB_REPOS, data: res.data })
+    }).catch(e => {
+        dispatch({ type: GITHUB_REPOS_ERROR, data: e })
+        const errors = e.response.data
+        if (errors)
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+    })
+}
+export const get_profiles = () => async dispatch => {
+    dispatch({ type: CLEAR_PROFILE })
+    setAuthToken(localStorage.token)
+    axios.get(`${APP_URL}/profile`).then(res => {
+        dispatch({ type: GET_PROFILES, data: res.data })
+    }).catch(e => {
+        dispatch({ type: PROFILE_NOT_FOUND, data: e })
+        const errors = e.response.data
+        if (errors)
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+    })
+}
 export const add_profile = (body, history, edit = false) => async dispatch => {
     const config = getConfig()
     setAuthToken(localStorage.token)

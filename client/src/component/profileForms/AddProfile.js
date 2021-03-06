@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { add_profile } from '../../redux/profile/action'
 import { withRouter, Link } from 'react-router-dom'
 
-function Profile({ add_profile, history, profile }) {
+function AddProfile({ add_profile, history, profile }) {
     const options = [{ value: 0, option: '* Select Professional Status' }, { value: 'Developer', option: 'Developer' },
     { value: 'Junior Developer', option: 'Junior Developer' }, { value: 'Senior Developer', option: 'Senior Developer' },
     { value: 'Manager', option: 'Manager' }, { value: 'Student or Learning', option: 'Student or Learning' },
@@ -163,4 +163,4 @@ function Profile({ add_profile, history, profile }) {
     )
 }
 const mapStateToProps = state => ({ profile: state.profile.profile })
-export default connect(mapStateToProps, { add_profile })(withRouter(Profile))
+export default connect(mapStateToProps, { add_profile })(withRouter(AddProfile))

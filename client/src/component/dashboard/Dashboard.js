@@ -9,7 +9,7 @@ import Education from './Education'
 function Dashboard({ get_profile, delete_Account, profile: { profile, loading }, auth: { user } }) {
     useEffect(() => {
         get_profile();
-    }, [])
+    }, [get_profile])
     return (
         loading && profile === null ? <Spinner /> :
             <Fragment>
@@ -21,9 +21,9 @@ function Dashboard({ get_profile, delete_Account, profile: { profile, loading },
                         <Experience experiences={profile.experience} />
                         <Education educations={profile.education} />
 
-                        <div class="my-2">
-                            <button class="btn btn-danger" onClick={delete_Account}>
-                                <i class="fas fa-user-minus"></i>
+                        <div className="my-2">
+                            <button className="btn btn-danger" onClick={delete_Account}>
+                                <i className="fas fa-user-minus"></i>
                                 Delete My Account
                             </button>
                         </div>
