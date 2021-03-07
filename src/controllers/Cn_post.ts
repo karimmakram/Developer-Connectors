@@ -33,7 +33,7 @@ class postController {
         try {
             const post = await postModel.findOne({ _id })
             if (!post)
-                return res.status(400).send('post not found  ')
+                return res.status(400).send([{ msg: 'post not found ' }])
             res.send(post)
         } catch (error) {
             if (error.kind === 'ObjectId')
@@ -101,7 +101,7 @@ class postController {
             if (post.likes) {
                 if (post.likes.filter(like => `${like.user}` === `${req.user._id}`).length === 0)
                     return res.status(400).send([{ msg: 'post has not yet have been liked' }])
-                post.likes = post.likes.filter(like => like.user === req.user._id)
+                post.likes = post.likes.filter(like => `${like.user}` !== `${req.user._id}`)
                 await post.save()
                 res.send(post)
             } else {

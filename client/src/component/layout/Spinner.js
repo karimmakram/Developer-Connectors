@@ -1,9 +1,9 @@
 import React from 'react'
-
+import spinner from './Spinner.gif'
 function Spinner() {
     return (
         <img
-            src=''
+            src={spinner}
             style={{ width: '200px', margin: 'auto', display: "block" }}
             alt="loading....."
         />

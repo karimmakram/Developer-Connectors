@@ -6,7 +6,7 @@ import { Logout } from '../../redux/auth/action'
 const Header = ({ Logout, isAuthenticated, loading }) => {
     const authLinks = (<ul>
         <li><Link to="/profiles">Developers</Link></li>
-        <li><a href="/register">Posts</a></li>
+        <li><a href="/posts">Posts</a></li>
         <li><Link to="/dashboard">
             <i className="fas fa-user"></i><span className="hide-sm">Dashboard</span></Link></li>
         <li><Link to="/login" onClick={Logout}>

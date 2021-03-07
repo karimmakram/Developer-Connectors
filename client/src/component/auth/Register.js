@@ -78,7 +78,8 @@ class Register extends Component {
                             onChange={e => this.ondataChange(e)}
                             placeholder="Password"
                             name="password"
-                            minLength="6"
+                            minLength="8"
+                            required
                         />
                     </div>
                     <div className="form-group">
@@ -87,7 +88,8 @@ class Register extends Component {
                             onChange={e => this.ondataChange(e)}
                             placeholder="Confirm Password"
                             name="password2"
-                            minLength="6"
+                            minLength="8"
+                            required
                         />
                     </div>
 

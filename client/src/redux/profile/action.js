@@ -1,6 +1,6 @@
 import { setAlert } from '../alert/action'
 import axios from 'axios'
-import { GET_PROFILE, PROFILE_NOT_FOUND, APP_URL, ADD_PROFILE, UPDATE_PROFILE, DELETE_EXPERIENCE, DELETE_ACCOUNT, CLEAR_PROFILE, GET_PROFILES, GET_GITHUB_REPOS ,GITHUB_REPOS_ERROR} from '../types'
+import { GET_PROFILE, PROFILE_NOT_FOUND, APP_URL, ADD_PROFILE, UPDATE_PROFILE, DELETE_EXPERIENCE, DELETE_ACCOUNT, CLEAR_PROFILE, GET_PROFILES, GET_GITHUB_REPOS, GITHUB_REPOS_ERROR } from '../types'
 import setAuthToken from '../../helper/setAuthToken'
 import { getConfig } from '../../helper/configHeader'
 
@@ -34,9 +34,6 @@ export const get_github_repos = (githubUsername) => async dispatch => {
         dispatch({ type: GET_GITHUB_REPOS, data: res.data })
     }).catch(e => {
         dispatch({ type: GITHUB_REPOS_ERROR, data: e })
-        const errors = e.response.data
-        if (errors)
-            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
     })
 }
 export const get_profiles = () => async dispatch => {
